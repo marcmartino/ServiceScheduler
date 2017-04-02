@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="banner">
+    <h1>{{ message }}</h1>
     <h3>
       <button v-on:click="this.addNewScheduleItem">
         Create new scheduled item</button>
@@ -10,10 +10,16 @@
 
 <script>
 export default {
-  name: 'hello',
+  name: 'banner',
+  methods: {
+    addNewScheduleItem: function () {
+      console.log('new item adding')
+      this.$emit('newScheduleItem')
+    }
+  },
   data () {
     return {
-      msg: 'Welcome to Marc\'s service scheduler test'
+      message: 'Welcome to Marc\'s service scheduler test'
     }
   }
 }

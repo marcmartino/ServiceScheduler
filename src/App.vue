@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <banner></banner>
+    <banner @newScheduleItem="createNewScheduleItem"></banner>
     <service-schedule-item v-for='item in scheduleList' v-bind:service="item">
           </service-schedule-item>
   </div>
@@ -27,10 +27,14 @@ export default {
     }
   },
   methods: {
+    createNewScheduleItem: function () {
+      this.scheduleList.push({})
+    },
     fetchScheduleList: function () {
       axios.get('/static/services.get.json')
         .then((function (self) {
           return function (allServices) {
+            // TODO if a new schedule item is in the array this would delete it
             self.scheduleList = allServices.data
           }
         }(this)))
