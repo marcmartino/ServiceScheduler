@@ -1,0 +1,18 @@
+[
+  {
+    "id": 33491,
+    "commandText": "rake do_something",
+    "dynoSize": "1X",
+    "frequency": "daily",
+    "lastRun": "never",
+    "nextDue": 1491010288018
+  },
+  {
+    "id": 33492,
+    "commandText": "rake test something",
+    "dynoSize": "1X",
+    "frequency": "daily",
+    "lastRun": "yesterday",
+    "nextDue": 1491011288018
+  }
+]

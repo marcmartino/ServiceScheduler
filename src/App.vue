@@ -10,6 +10,7 @@
 <script>
 import Banner from './components/Banner'
 import ServiceScheduleItem from './components/ServiceScheduleItem'
+import axios from 'axios'
 
 export default {
   name: 'app',
@@ -17,26 +18,25 @@ export default {
     Banner,
     ServiceScheduleItem
   },
+  created: function () {
+    this.fetchScheduleList()
+  },
   data () {
     return {
-      scheduleList: [
-        {
-          'id': 33491,
-          'commandText': 'rake do_something',
-          'dynoSize': '1X',
-          'frequency': 'daily',
-          'lastRun': 'never',
-          'nextDue': 1491010288018
-        },
-        {
-          'id': 33492,
-          'commandText': 'rake test something',
-          'dynoSize': '1X',
-          'frequency': 'daily',
-          'lastRun': 'yesterday',
-          'nextDue': 1491011288018
-        }
-      ]
+      scheduleList: []
+    }
+  },
+  methods: {
+    fetchScheduleList: function () {
+      axios.get('/static/services.get.json')
+        .then((function (self) {
+          return function (allServices) {
+            self.scheduleList = allServices.data
+          }
+        }(this)))
+        .catch(function () {
+          console.error('failed to load existing scheduled services')
+        })
     }
   }
 }
