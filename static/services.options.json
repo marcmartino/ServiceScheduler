@@ -1,0 +1,4 @@
+{
+  "dynoSize": ["1X", "2X", "PX"],
+  "frequency": ["daily", "hourly", "every 10 minutes"]
+}

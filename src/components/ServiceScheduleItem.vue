@@ -8,7 +8,7 @@
     </div>
 
     <div v-if="editing">
-      <div>$<input v-bind:value="service.commandText" /></div>
+      <div>$<input v-model:value="service.commandText" /></div>
       <div>
         Last Ran: <span>{{service.lastRun}}</span> -
         Frequency: <select v-model="service.frequency">
@@ -26,25 +26,49 @@
           <option>2X</option>
         </select>
       </div>
-      <button v-on:click="toggleEditingStatus">Save</button>
-      <button v-if="service.id">Cancel</button>
+      <button v-on:click="saveItem">{{this.saving ? 'Saving...' : 'Save'}}</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'service-schedule-item',
   props: ['service'],
   data () {
     return {
       editing: false,
+      saving: false,
       tomorrowDate: (new Date()).setUTCDate((new Date()).getUTCDate() + 1)
     }
   },
   methods: {
     toggleEditingStatus: function () {
       this.editing = !this.editing
+    },
+    saveItem: function () {
+      this.saving = true
+      // TODO id of 0 will get punted and this is rather inelegant anyway
+      let targetUrl = this.service.id ? '/static/services.put.json' : '/static/services.post.json'
+      axios.get(targetUrl, this.service)
+        .then(function (self) {
+          return function (savedServiceResp) {
+            if (!self.service.id) {
+              self.service.id = savedServiceResp.data.id
+            }
+            self.editing = false
+            self.saving = false
+          }
+        }(this))
+        .catch(function (self) {
+          return function () {
+            console.error('failed to save item')
+            alert('Item could not be saved')
+            this.saving = false
+          }
+        }(this))
     }
   },
   created: function () {
