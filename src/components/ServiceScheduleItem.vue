@@ -8,7 +8,7 @@
     </div>
 
     <div v-if="editing">
-      <div>$<input v-bind:value="service.commandText" /></div>
+      <div>$<input class='editServiceText' v-bind:value="service.commandText" /></div>
       <div>
         Last Ran: <span>{{service.lastRun}}</span> -
         Frequency: <select v-model="service.frequency">

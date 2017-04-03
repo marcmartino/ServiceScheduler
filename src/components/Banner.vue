@@ -2,7 +2,7 @@
   <div class="banner">
     <h1>{{ message }}</h1>
     <h3>
-      <button v-on:click="this.addNewScheduleItem">
+      <button class='createScheduledBtn' v-on:click="this.addNewScheduleItem">
         Create new scheduled item</button>
     </h3>
   </div>
